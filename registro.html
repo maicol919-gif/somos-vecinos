@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrar caso — Somos Vecinos</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <h1>Somos Vecinos</h1>
+  <nav>
+    <a href="index.html">Ver casos</a>
+    <a href="registro.html">Registrar caso</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Registrar un caso</h2>
+  <p>Cuéntanos quién necesita ayuda tras el terremoto. Tu caso será revisado antes de publicarse.</p>
+
+  <form id="form-registro" class="card-form">
+    <div id="mensaje" class="mensaje hidden"></div>
+
+    <label>
+      Nombre de la persona o familia
+      <input type="text" id="nombre" name="nombre" required maxlength="120" placeholder="Ej: Familia Gómez">
+    </label>
+
+    <label>
+      Ciudad
+      <input type="text" id="ciudad" name="ciudad" required maxlength="80" placeholder="Ej: Armenia">
+    </label>
+
+    <label>
+      Tipo de necesidad
+      <select id="tipo_necesidad" name="tipo_necesidad" required>
+        <option value="">Selecciona una opción</option>
+        <option value="vivienda">Vivienda</option>
+        <option value="alimentos">Alimentos</option>
+        <option value="dinero">Dinero</option>
+        <option value="medicina">Medicina</option>
+        <option value="otro">Otro</option>
+      </select>
+    </label>
+
+    <label>
+      Descripción corta
+      <textarea id="descripcion" name="descripcion" required maxlength="300" placeholder="Describe brevemente la situación"></textarea>
+      <span class="contador"><span id="contador-desc">0</span>/300</span>
+    </label>
+
+    <label>
+      Foto (opcional)
+      <input type="file" id="foto" name="foto" accept="image/*">
+    </label>
+
+    <label>
+      Contacto (teléfono o email)
+      <input type="text" id="contacto" name="contacto" required maxlength="120" placeholder="Ej: 3001234567 o correo@ejemplo.com">
+    </label>
+
+    <button type="submit" class="btn-enviar" id="btn-enviar">Enviar caso</button>
+  </form>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabaseClient.js"></script>
+<script src="js/registro.js"></script>
+</body>
+</html>

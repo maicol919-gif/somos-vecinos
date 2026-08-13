@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Somos Vecinos</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header class="top">
+  <h1>Somos Vecinos · Admin</h1>
+  <nav>
+    <a href="../index.html">Ver sitio público</a>
+  </nav>
+</header>
+
+<main>
+  <div id="login-box" class="login-box">
+    <h2>Acceso administrador</h2>
+    <label>
+      Código de acceso
+      <input type="password" id="codigo-acceso" placeholder="Código">
+    </label>
+    <button class="btn-enviar" id="btn-entrar">Entrar</button>
+    <div id="login-error" class="mensaje error hidden"></div>
+  </div>
+
+  <div id="panel" class="hidden">
+    <h2>Casos pendientes</h2>
+    <div id="lista-pendientes" class="tabla-casos"></div>
+
+    <h2>Otros casos</h2>
+    <div id="lista-otros" class="tabla-casos"></div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabaseClient.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

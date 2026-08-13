@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Somos Vecinos — Casos del terremoto</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <h1>Somos Vecinos</h1>
+  <nav>
+    <a href="index.html">Ver casos</a>
+    <a href="registro.html">Registrar caso</a>
+  </nav>
+</header>
+
+<main>
+  <p>Conecta directamente con personas y familias afectadas por el terremoto. Coordina la ayuda con ellas por tu cuenta.</p>
+
+  <div class="filtros">
+    <select id="filtro-ciudad">
+      <option value="">Todas las ciudades</option>
+    </select>
+    <select id="filtro-necesidad">
+      <option value="">Todas las necesidades</option>
+      <option value="vivienda">Vivienda</option>
+      <option value="alimentos">Alimentos</option>
+      <option value="dinero">Dinero</option>
+      <option value="medicina">Medicina</option>
+      <option value="otro">Otro</option>
+    </select>
+  </div>
+
+  <div id="grid" class="grid"></div>
+  <div id="vacio" class="vacio hidden">No hay casos verificados con estos filtros todavía.</div>
+</main>
+
+<div id="overlay" class="overlay hidden">
+  <div class="modal">
+    <h3 id="modal-nombre"></h3>
+    <p><strong>Contacto:</strong> <span id="modal-contacto"></span></p>
+    <button class="cerrar" id="cerrar-modal">Cerrar</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabaseClient.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
