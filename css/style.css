@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@400;600;700&display=swap');
 
 :root {
-  --teal: #0F9D8C;
-  --teal-dark: #0C7D70;
-  --teal-tint: #E4F6F3;
-  --morado: #7B5FE0;
-  --morado-dark: #6449C7;
-  --morado-tint: #EFECFC;
+  --teal: #14804F;
+  --teal-dark: #0F6B41;
+  --teal-tint: #E3F3EA;
+  --morado: #14804F;
+  --morado-dark: #0F6B41;
+  --morado-tint: #E3F3EA;
   --bg: #F5F6F8;
   --card: #ffffff;
   --texto: #1F2430;
