@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Somos Vecinos — Casos del terremoto</title>
+<meta name="description" content="Conecta directamente con familias afectadas por el terremoto y coordina ayuda real, verificada, cerca de ti.">
+<meta property="og:title" content="Somos Vecinos — Casos del terremoto">
+<meta property="og:description" content="Conecta directamente con familias afectadas por el terremoto y coordina ayuda real, verificada, cerca de ti.">
+<meta property="og:image" content="https://maicol919-gif.github.io/somos-vecinos/og-image.png">
+<meta property="og:url" content="https://maicol919-gif.github.io/somos-vecinos/">
+<meta property="og:type" content="website">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,11 +18,32 @@
   <nav>
     <a href="index.html">Ver casos</a>
     <a href="registro.html">Registrar caso</a>
+    <a href="prensa.html">Prensa</a>
   </nav>
 </header>
 
 <main>
-  <p>Conecta directamente con personas y familias afectadas por el terremoto. Coordina la ayuda con ellas por tu cuenta.</p>
+  <section class="hero">
+    <h2>Cada caso aquí es real, verificado, y espera tu ayuda</h2>
+    <p>Conecta directamente con personas y familias afectadas por el terremoto. Coordina la ayuda con ellas por tu cuenta, sin intermediarios.</p>
+    <div class="hero-botones">
+      <a href="#grid" class="btn btn-hero-primario">Ver casos</a>
+      <a href="registro.html" class="btn btn-hero-secundario">Registrar caso</a>
+    </div>
+  </section>
+
+  <section class="como-verificamos">
+    <h3>Cómo verificamos los casos</h3>
+    <div class="pasos-verificacion">
+      <div class="paso"><span class="num">1</span><span>Alguien registra el caso con sus datos de contacto y una descripción de la necesidad.</span></div>
+      <div class="paso"><span class="num">2</span><span>El equipo de Somos Vecinos revisa la información antes de publicarla.</span></div>
+      <div class="paso"><span class="num">3</span><span>Solo los casos verificados aparecen en el sitio, con el badge de verificado.</span></div>
+    </div>
+  </section>
+
+  <p id="contador-casos" class="contador-casos hidden"></p>
+
+  <div id="destacado-wrap"></div>
 
   <div class="filtros">
     <select id="filtro-ciudad">
@@ -32,14 +59,21 @@
     </select>
   </div>
 
+  <div id="skeleton" class="skeleton-grid">
+    <div class="skeleton-card"><div class="skeleton-foto"></div><div class="skeleton-linea"></div><div class="skeleton-linea corta"></div></div>
+    <div class="skeleton-card"><div class="skeleton-foto"></div><div class="skeleton-linea"></div><div class="skeleton-linea corta"></div></div>
+    <div class="skeleton-card"><div class="skeleton-foto"></div><div class="skeleton-linea"></div><div class="skeleton-linea corta"></div></div>
+  </div>
+
   <div id="grid" class="grid"></div>
-  <div id="vacio" class="vacio hidden">No hay casos verificados con estos filtros todavía.</div>
+  <div id="vacio" class="vacio hidden">Aún no hay casos verificados. Vuelve pronto o sé el primero en registrar uno.</div>
 </main>
 
 <div id="overlay" class="overlay hidden">
   <div class="modal">
     <h3 id="modal-nombre"></h3>
     <p><strong>Contacto:</strong> <span id="modal-contacto"></span></p>
+    <a class="btn btn-whatsapp" id="modal-whatsapp" href="#" target="_blank" rel="noopener">Escribir por WhatsApp</a>
     <button class="cerrar" id="cerrar-modal">Cerrar</button>
   </div>
 </div>
