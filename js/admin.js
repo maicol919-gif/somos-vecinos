@@ -38,6 +38,22 @@ function mostrarPanel() {
   cargarCasos();
 }
 
+function filaItem(item) {
+  const div = document.createElement("div");
+  div.className = "admin-item-fila";
+  div.innerHTML = `
+    <span class="admin-item-nombre">${item.nombre}</span>
+    <input type="number" class="admin-item-input" min="0" step="0.1" value="${item.cantidad_recibida}" data-id="${item.id}">
+    <span class="admin-item-de">de ${item.cantidad_requerida} ${item.unidad}</span>
+    <button type="button" class="btn-actualizar-item" data-id="${item.id}">Actualizar</button>
+  `;
+  div.querySelector(".btn-actualizar-item").addEventListener("click", () => {
+    const input = div.querySelector(".admin-item-input");
+    actualizarItem(item.id, parseFloat(input.value) || 0);
+  });
+  return div;
+}
+
 function filaCaso(caso) {
   const div = document.createElement("div");
   div.className = "fila-caso";
@@ -55,16 +71,21 @@ function filaCaso(caso) {
     ${foto}
     <div class="info">
       <h4>${caso.nombre} — ${caso.ciudad}</h4>
-      <p>${ETIQUETAS[caso.tipo_necesidad] || caso.tipo_necesidad}</p>
+      <p>${ETIQUETAS[caso.tipo_necesidad] || caso.tipo_necesidad} · Urgencia: ${caso.urgencia}</p>
       <p>${caso.descripcion}</p>
       <p><strong>Contacto:</strong> ${caso.contacto}</p>
+      <div class="admin-items"></div>
     </div>
     <div class="acciones">${acciones}</div>
   `;
 
   div.querySelectorAll("button[data-id]").forEach((btn) => {
+    if (btn.classList.contains("btn-actualizar-item")) return;
     btn.addEventListener("click", () => cambiarEstado(caso.id, btn.dataset.estado));
   });
+
+  const contenedorItems = div.querySelector(".admin-items");
+  (caso.caso_items || []).forEach((item) => contenedorItems.appendChild(filaItem(item)));
 
   return div;
 }
@@ -78,10 +99,19 @@ async function cambiarEstado(id, estado) {
   cargarCasos();
 }
 
+async function actualizarItem(id, cantidad_recibida) {
+  const { error } = await supabaseClient.from("caso_items").update({ cantidad_recibida }).eq("id", id);
+  if (error) {
+    alert(`Error: ${error.message}`);
+    return;
+  }
+  cargarCasos();
+}
+
 async function cargarCasos() {
   const { data, error } = await supabaseClient
     .from("casos")
-    .select("*")
+    .select("*, caso_items(*)")
     .order("created_at", { ascending: false });
 
   if (error) {

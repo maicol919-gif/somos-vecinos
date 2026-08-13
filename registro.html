@@ -14,7 +14,15 @@
 </head>
 <body>
 <header class="top">
-  <h1>Somos Vecinos</h1>
+  <div class="brand">
+    <span class="logo-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12.5c1.5-2 4-2 4 .5 0 2-2.5 3.7-4 4.7-1.5-1-4-2.7-4-4.7 0-2.5 2.5-2.5 4-.5z"/><path d="M4 16c0 2.2 1.8 4 4 4M20 16c0 2.2-1.8 4-4 4"/></svg>
+    </span>
+    <div class="brand-text">
+      <span class="brand-nombre">Somos Vecinos</span>
+      <span class="brand-tagline">Ayuda vecino a vecino</span>
+    </div>
+  </div>
   <nav>
     <a href="index.html">Ver casos</a>
     <a href="registro.html">Registrar caso</a>
@@ -52,10 +60,28 @@
     </label>
 
     <label>
+      Urgencia
+      <select id="urgencia" name="urgencia" required>
+        <option value="baja">Baja</option>
+        <option value="media" selected>Media</option>
+        <option value="alta">Alta</option>
+        <option value="urgente">Urgente</option>
+      </select>
+    </label>
+
+    <label>
       Descripción corta
       <textarea id="descripcion" name="descripcion" required maxlength="300" placeholder="Describe brevemente la situación"></textarea>
       <span class="contador"><span id="contador-desc">0</span>/300</span>
     </label>
+
+    <div class="items-form">
+      <div class="items-form-header">
+        <span>¿Qué necesitan? (opcional, se puede editar después)</span>
+        <button type="button" class="btn-agregar-item" id="btn-agregar-item">+ Agregar ítem</button>
+      </div>
+      <div id="items-lista"></div>
+    </div>
 
     <label>
       Foto (opcional)

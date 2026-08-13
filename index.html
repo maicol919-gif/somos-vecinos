@@ -14,7 +14,15 @@
 </head>
 <body>
 <header class="top">
-  <h1>Somos Vecinos</h1>
+  <div class="brand">
+    <span class="logo-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12.5c1.5-2 4-2 4 .5 0 2-2.5 3.7-4 4.7-1.5-1-4-2.7-4-4.7 0-2.5 2.5-2.5 4-.5z"/><path d="M4 16c0 2.2 1.8 4 4 4M20 16c0 2.2-1.8 4-4 4"/></svg>
+    </span>
+    <div class="brand-text">
+      <span class="brand-nombre">Somos Vecinos</span>
+      <span class="brand-tagline">Ayuda vecino a vecino</span>
+    </div>
+  </div>
   <nav>
     <a href="index.html">Ver casos</a>
     <a href="registro.html">Registrar caso</a>
@@ -24,11 +32,50 @@
 
 <main>
   <section class="hero">
-    <h2>Cada caso aquí es real, verificado, y espera tu ayuda</h2>
-    <p>Conecta directamente con personas y familias afectadas por el terremoto. Coordina la ayuda con ellas por tu cuenta, sin intermediarios.</p>
-    <div class="hero-botones">
-      <a href="#grid" class="btn btn-hero-primario">Ver casos</a>
-      <a href="registro.html" class="btn btn-hero-secundario">Registrar caso</a>
+    <h1 class="hero-titulo">Conectamos necesidades reales con ayuda real.</h1>
+    <p class="hero-sub">Personas afectadas por el terremoto publican su caso, la comunidad lo verifica, y tú coordinas la ayuda directamente, sin intermediarios.</p>
+    <div class="hero-bloques">
+      <div class="hero-bloque hero-bloque-ayuda">
+        <span class="hero-bloque-icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6"/></svg>
+        </span>
+        <div>
+          <strong>¿Necesitas ayuda?</strong>
+          <span class="desc">Registra tu caso y la comunidad podrá verlo y verificarlo.</span>
+        </div>
+      </div>
+      <div class="hero-bloque hero-bloque-donar">
+        <span class="hero-bloque-icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.35-9.5-8.5C.7 8 2.3 4.8 5.6 4.2 8 3.8 10 5 12 7.3 14 5 16 3.8 18.4 4.2c3.3.6 4.9 3.8 3.1 7.3C19 15.65 12 20 12 20z"/></svg>
+        </span>
+        <div>
+          <strong>¿Quieres donar?</strong>
+          <span class="desc">Explora casos verificados y ayuda directo, sin intermediarios.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="resumen">
+    <div class="resumen-grid" id="resumen-grid">
+      <div class="metric-card">
+        <span class="metric-icono metric-icono-teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8" r="2.6"/><circle cx="16" cy="9" r="2.2"/><path d="M2.8 19c0-3 2.7-5.2 5.7-5.2s5.7 2.2 5.7 5.2"/><path d="M13.8 14.3c2.4.3 4.2 2.2 4.2 4.7"/></svg>
+        </span>
+        <div class="metric-texto">
+          <span class="metric-num" id="metric-casos">0</span>
+          <span class="metric-label">Casos activos</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-icono metric-icono-morado">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+        </span>
+        <div class="metric-texto">
+          <span class="metric-num" id="metric-ciudades">0</span>
+          <span class="metric-label">Ciudades cubiertas</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -40,6 +87,8 @@
       <div class="paso"><span class="num">3</span><span>Solo los casos verificados aparecen en el sitio, con el badge de verificado.</span></div>
     </div>
   </section>
+
+  <h2 class="seccion-titulo">Necesidades urgentes</h2>
 
   <p id="contador-casos" class="contador-casos hidden"></p>
 
@@ -66,12 +115,46 @@
   </div>
 
   <div id="grid" class="grid"></div>
+
+  <div id="dash" class="dash">
+    <div id="dash-list" class="dash-list"></div>
+    <div id="dash-detail" class="dash-detail"></div>
+  </div>
+
   <div id="vacio" class="vacio hidden">Aún no hay casos verificados. Vuelve pronto o sé el primero en registrar uno.</div>
+
+  <section class="valores">
+    <div class="valor">
+      <span class="valor-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3z"/><polyline points="9 12 11.2 14.2 15.5 9.8"/></svg>
+      </span>
+      <span class="label">Verificación real</span>
+    </div>
+    <div class="valor">
+      <span class="valor-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>
+      </span>
+      <span class="label">Transparencia total</span>
+    </div>
+    <div class="valor">
+      <span class="valor-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2.4"/><circle cx="19" cy="12" r="2.4"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg>
+      </span>
+      <span class="label">Sin intermediarios</span>
+    </div>
+    <div class="valor">
+      <span class="valor-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8" r="2.6"/><circle cx="16" cy="9" r="2.2"/><path d="M2.8 19c0-3 2.7-5.2 5.7-5.2s5.7 2.2 5.7 5.2"/><path d="M13.8 14.3c2.4.3 4.2 2.2 4.2 4.7"/></svg>
+      </span>
+      <span class="label">Comunidad unida</span>
+    </div>
+  </section>
 </main>
 
 <div id="overlay" class="overlay hidden">
   <div class="modal">
     <h3 id="modal-nombre"></h3>
+    <div id="modal-detalle"></div>
     <p><strong>Contacto:</strong> <span id="modal-contacto"></span></p>
     <a class="btn btn-whatsapp" id="modal-whatsapp" href="#" target="_blank" rel="noopener">Escribir por WhatsApp</a>
     <button class="cerrar" id="cerrar-modal">Cerrar</button>
