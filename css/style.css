@@ -666,6 +666,33 @@ button, .btn {
   #destacado-wrap { display: none; }
   .dash { display: grid; grid-template-columns: 300px 1fr; gap: 1.25rem; align-items: start; }
   .dash-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  /* app funciona de una: el panel de necesidades queda arriba, hero pasa a
+     contenido secundario debajo, sin scroll para ver el dashboard */
+  main { display: flex; flex-direction: column; }
+  .resumen { order: 1; margin-bottom: 0.9rem; }
+  .explorar-panel { order: 2; }
+  .hero { order: 3; padding: 1.5rem 1rem; }
+  .como-verificamos { order: 4; }
+  .valores { order: 5; }
+
+  .resumen-grid { display: flex; gap: 0.75rem; }
+  .metric-card { padding: 0.6rem 1rem; flex: 0 0 auto; }
+  .metric-icono { width: 32px; height: 32px; border-radius: 9px; }
+  .metric-icono svg { width: 16px; height: 16px; }
+  .metric-num { font-size: 1.15rem; }
+  .metric-label { font-size: 0.7rem; }
+
+  .explorar-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .explorar-topbar .seccion-titulo { margin: 0; }
+  .explorar-topbar .filtros { margin-bottom: 0; }
 }
 
 /* valores finales */

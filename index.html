@@ -88,40 +88,43 @@
     </div>
   </section>
 
-  <h2 class="seccion-titulo">Necesidades urgentes</h2>
+  <div class="explorar-panel">
+    <div class="explorar-topbar">
+      <h2 class="seccion-titulo">Necesidades urgentes</h2>
+      <div class="filtros">
+        <select id="filtro-ciudad">
+          <option value="">Todas las ciudades</option>
+        </select>
+        <select id="filtro-necesidad">
+          <option value="">Todas las necesidades</option>
+          <option value="vivienda">Vivienda</option>
+          <option value="alimentos">Alimentos</option>
+          <option value="dinero">Dinero</option>
+          <option value="medicina">Medicina</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+    </div>
 
-  <p id="contador-casos" class="contador-casos hidden"></p>
+    <p id="contador-casos" class="contador-casos hidden"></p>
 
-  <div id="destacado-wrap"></div>
+    <div id="destacado-wrap"></div>
 
-  <div class="filtros">
-    <select id="filtro-ciudad">
-      <option value="">Todas las ciudades</option>
-    </select>
-    <select id="filtro-necesidad">
-      <option value="">Todas las necesidades</option>
-      <option value="vivienda">Vivienda</option>
-      <option value="alimentos">Alimentos</option>
-      <option value="dinero">Dinero</option>
-      <option value="medicina">Medicina</option>
-      <option value="otro">Otro</option>
-    </select>
+    <div id="skeleton" class="skeleton-grid">
+      <div class="skeleton-card"><div class="skeleton-foto"></div><div class="skeleton-linea"></div><div class="skeleton-linea corta"></div></div>
+      <div class="skeleton-card"><div class="skeleton-foto"></div><div class="skeleton-linea"></div><div class="skeleton-linea corta"></div></div>
+      <div class="skeleton-card"><div class="skeleton-foto"></div><div class="skeleton-linea"></div><div class="skeleton-linea corta"></div></div>
+    </div>
+
+    <div id="grid" class="grid"></div>
+
+    <div id="dash" class="dash">
+      <div id="dash-list" class="dash-list"></div>
+      <div id="dash-detail" class="dash-detail"></div>
+    </div>
+
+    <div id="vacio" class="vacio hidden">Aún no hay casos verificados. Vuelve pronto o sé el primero en registrar uno.</div>
   </div>
-
-  <div id="skeleton" class="skeleton-grid">
-    <div class="skeleton-card"><div class="skeleton-foto"></div><div class="skeleton-linea"></div><div class="skeleton-linea corta"></div></div>
-    <div class="skeleton-card"><div class="skeleton-foto"></div><div class="skeleton-linea"></div><div class="skeleton-linea corta"></div></div>
-    <div class="skeleton-card"><div class="skeleton-foto"></div><div class="skeleton-linea"></div><div class="skeleton-linea corta"></div></div>
-  </div>
-
-  <div id="grid" class="grid"></div>
-
-  <div id="dash" class="dash">
-    <div id="dash-list" class="dash-list"></div>
-    <div id="dash-detail" class="dash-detail"></div>
-  </div>
-
-  <div id="vacio" class="vacio hidden">Aún no hay casos verificados. Vuelve pronto o sé el primero en registrar uno.</div>
 
   <section class="valores">
     <div class="valor">
