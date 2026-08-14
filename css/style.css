@@ -4,9 +4,9 @@
   --teal: #14804F;
   --teal-dark: #0F6B41;
   --teal-tint: #E3F3EA;
-  --morado: #14804F;
-  --morado-dark: #0F6B41;
-  --morado-tint: #E3F3EA;
+  --morado: #7B5FE0;
+  --morado-dark: #6449C7;
+  --morado-tint: #EFECFC;
   --bg: #F5F6F8;
   --card: #ffffff;
   --texto: #1F2430;
@@ -180,6 +180,68 @@ main {
   color: var(--texto-gris);
   line-height: 1.4;
 }
+
+/* landing (elegir rol) */
+.landing-hero {
+  text-align: center;
+  padding: 2.5rem 1rem 1rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.landing-hero h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0 0 0.6rem;
+}
+
+.landing-hero p {
+  color: var(--texto-gris);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.rol-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 420px;
+  margin: 2rem auto 3rem;
+  padding: 0 1rem;
+}
+
+.rol-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.4rem;
+  border-radius: var(--radius-lg);
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rol-card:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(16, 24, 40, 0.16); }
+
+.rol-card-necesito { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%); }
+.rol-card-donar { background: linear-gradient(135deg, var(--morado) 0%, var(--morado-dark) 100%); }
+
+.rol-card-icono {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rol-card-icono svg { width: 26px; height: 26px; }
+
+.rol-card strong { display: block; font-size: 1.05rem; margin-bottom: 0.25rem; }
+.rol-card span { display: block; font-size: 0.85rem; opacity: 0.92; line-height: 1.4; }
 
 /* resumen (dashboard metrics) */
 .resumen {
