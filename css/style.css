@@ -57,6 +57,8 @@ header.top {
   display: flex;
   align-items: center;
   gap: 0.65rem;
+  text-decoration: none;
+  color: inherit;
 }
 
 .logo-circle {
