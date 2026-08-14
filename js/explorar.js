@@ -167,6 +167,44 @@ function crearMiniListItemHTML(caso, activo) {
   `;
 }
 
+function crearReportarHTML() {
+  return `
+    <button type="button" class="link-reportar">¿Algo no cuadra? Reportar este caso</button>
+    <div class="reportar-form hidden">
+      <select class="reportar-motivo">
+        <option value="informacion_falsa">Información falsa</option>
+        <option value="sospechoso">Solicitud sospechosa</option>
+        <option value="inapropiado">Contenido inapropiado</option>
+        <option value="otro">Otro</option>
+      </select>
+      <textarea class="reportar-detalle" placeholder="Contanos qué viste (opcional)" maxlength="300"></textarea>
+      <button type="button" class="btn-enviar-reporte">Enviar reporte</button>
+    </div>
+  `;
+}
+
+function activarReportar(contenedor, casoId) {
+  const link = contenedor.querySelector(".link-reportar");
+  const form = contenedor.querySelector(".reportar-form");
+  if (!link) return;
+
+  link.addEventListener("click", () => {
+    form.classList.toggle("hidden");
+  });
+
+  contenedor.querySelector(".btn-enviar-reporte").addEventListener("click", async (e) => {
+    const boton = e.target;
+    boton.disabled = true;
+    boton.textContent = "Enviando...";
+    const motivo = contenedor.querySelector(".reportar-motivo").value;
+    const detalle = contenedor.querySelector(".reportar-detalle").value.trim();
+    const { error } = await supabaseClient.from("reportes").insert({ caso_id: casoId, motivo, detalle: detalle || null });
+    form.innerHTML = error
+      ? `<p class="descripcion">No pudimos enviar el reporte. Intentá de nuevo.</p>`
+      : `<p class="descripcion">Gracias, lo vamos a revisar.</p>`;
+  });
+}
+
 function crearDetallePanelHTML(caso) {
   return `
     ${crearGaleriaHTML(caso)}
@@ -178,6 +216,7 @@ function crearDetallePanelHTML(caso) {
       <button class="btn-ayudar" id="dash-btn-ayudar">Quiero ayudar</button>
       <button class="btn-compartir" id="dash-btn-compartir" aria-label="Compartir">${SHARE_SVG}</button>
     </div>
+    <div class="reportar-wrap">${crearReportarHTML()}</div>
   `;
 }
 
@@ -187,6 +226,7 @@ function renderDashDetail(caso) {
   dashDetail.querySelector("#dash-btn-ayudar").addEventListener("click", () => abrirModal(caso));
   dashDetail.querySelector("#dash-btn-compartir").addEventListener("click", () => compartirCaso(caso));
   activarGaleria(dashDetail);
+  activarReportar(dashDetail, caso.id);
 }
 
 function renderDashList(filtrados) {
@@ -217,11 +257,13 @@ function abrirModal(caso) {
     ${crearGaleriaHTML(caso)}
     <p class="descripcion">${caso.descripcion}</p>
     ${caso.caso_items && caso.caso_items.length ? crearItemsFullHTML(caso.caso_items) : ""}
+    <div class="reportar-wrap">${crearReportarHTML()}</div>
   `;
   modalContacto.textContent = caso.contacto;
   modalWhatsapp.href = linkWhatsapp(caso.contacto, `Hola, vi tu caso en Somos Vecinos y quiero ayudar`);
   overlay.classList.remove("hidden");
   activarGaleria(modalDetalle);
+  activarReportar(modalDetalle, caso.id);
 }
 
 function compartirCaso(caso) {
@@ -293,7 +335,9 @@ function poblarFiltroCiudades() {
 async function cargarCasos() {
   const { data, error } = await supabaseClient
     .from("casos")
-    .select("*, caso_items(*), caso_fotos(*)")
+    .select(
+      "id, nombre, ciudad, tipo_necesidad, urgencia, descripcion, foto_url, contacto, estado, created_at, caso_items(*), caso_fotos(*)"
+    )
     .eq("estado", "verificado")
     .order("created_at", { ascending: false });
 

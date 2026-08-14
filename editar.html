@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar mi caso — Somos Vecinos</title>
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Editar mi caso — Somos Vecinos">
+<link rel="stylesheet" href="css/style.css?v=3">
+</head>
+<body>
+<header class="top">
+  <a href="index.html" class="brand">
+    <span class="logo-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12.5c1.5-2 4-2 4 .5 0 2-2.5 3.7-4 4.7-1.5-1-4-2.7-4-4.7 0-2.5 2.5-2.5 4-.5z"/><path d="M4 16c0 2.2 1.8 4 4 4M20 16c0 2.2-1.8 4-4 4"/></svg>
+    </span>
+    <div class="brand-text">
+      <span class="brand-nombre">Somos Vecinos</span>
+      <span class="brand-tagline">Ayuda vecino a vecino</span>
+    </div>
+  </a>
+</header>
+
+<main>
+  <div id="cargando">Cargando tu caso…</div>
+
+  <div id="no-encontrado" class="vacio hidden">
+    Este link de edición no es válido. Revisá que lo copiaste completo, o contactanos si lo perdiste.
+  </div>
+
+  <div id="editar-wrap" class="hidden">
+    <h2>Editar mi caso</h2>
+    <p>Acá podés actualizar tu situación. Los cambios se guardan al instante.</p>
+
+    <form id="form-editar" class="card-form">
+      <div id="mensaje" class="mensaje hidden"></div>
+
+      <label>
+        Ciudad
+        <input type="text" id="ciudad" required maxlength="80">
+      </label>
+
+      <label>
+        Descripción corta
+        <textarea id="descripcion" required maxlength="300"></textarea>
+        <span class="contador"><span id="contador-desc">0</span>/300</span>
+      </label>
+
+      <div class="items-form">
+        <div class="items-form-header">
+          <span>¿Qué necesitan?</span>
+          <button type="button" class="btn-agregar-item" id="btn-agregar-item">+ Agregar ítem</button>
+        </div>
+        <div id="items-lista"></div>
+      </div>
+
+      <label>
+        Categoría general
+        <select id="tipo_necesidad" required>
+          <option value="vivienda">Vivienda</option>
+          <option value="alimentos">Alimentos</option>
+          <option value="dinero">Dinero</option>
+          <option value="medicina">Medicina</option>
+          <option value="otro">Otro</option>
+        </select>
+      </label>
+
+      <label>
+        Urgencia
+        <select id="urgencia" required>
+          <option value="baja">Baja</option>
+          <option value="media">Media</option>
+          <option value="alta">Alta</option>
+          <option value="urgente">Urgente</option>
+        </select>
+      </label>
+
+      <div class="fotos-form">
+        <span class="campo-label-solo">Fotos (hasta 5)</span>
+        <div id="fotos-preview" class="fotos-preview"></div>
+        <input type="file" id="foto-input" accept="image/*" multiple class="hidden">
+        <button type="button" class="btn-agregar-item" id="btn-agregar-foto">+ Agregar fotos</button>
+      </div>
+
+      <label>
+        Contacto (teléfono o email)
+        <input type="text" id="contacto" required maxlength="120">
+      </label>
+
+      <button type="submit" class="btn-enviar" id="btn-guardar">Guardar cambios</button>
+    </form>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabaseClient.js?v=1"></script>
+<script src="js/editar.js?v=1"></script>
+</body>
+</html>

@@ -66,6 +66,11 @@ function filaCaso(caso) {
   const foto = fotos.length ? `<img src="${fotos[0]}" alt="Foto de ${caso.nombre}">` : "";
   const masFotos = fotos.length > 1 ? `<span class="admin-mas-fotos">+${fotos.length - 1} foto${fotos.length - 1 === 1 ? "" : "s"}</span>` : "";
 
+  const reportes = caso.reportes || [];
+  const badgeReportes = reportes.length > 0
+    ? `<span class="admin-reportes-badge">⚠ ${reportes.length} reporte${reportes.length === 1 ? "" : "s"}</span>`
+    : "";
+
   const acciones = caso.estado === "pendiente"
     ? `<button class="btn-verificar" data-id="${caso.id}" data-estado="verificado">Verificar</button>
        <button class="btn-rechazar" data-id="${caso.id}" data-estado="rechazado">Rechazar</button>`
@@ -75,7 +80,7 @@ function filaCaso(caso) {
     ${foto}
     ${masFotos}
     <div class="info">
-      <h4>${caso.nombre} — ${caso.ciudad}</h4>
+      <h4>${caso.nombre} — ${caso.ciudad} ${badgeReportes}</h4>
       <p>${ETIQUETAS[caso.tipo_necesidad] || caso.tipo_necesidad} · Urgencia: ${caso.urgencia}</p>
       <p>${caso.descripcion}</p>
       <p><strong>Contacto:</strong> ${caso.contacto}</p>
@@ -116,7 +121,9 @@ async function actualizarItem(id, cantidad_recibida) {
 async function cargarCasos() {
   const { data, error } = await supabaseClient
     .from("casos")
-    .select("*, caso_items(*), caso_fotos(*)")
+    .select(
+      "id, nombre, ciudad, tipo_necesidad, urgencia, descripcion, foto_url, contacto, estado, created_at, caso_items(*), caso_fotos(*), reportes(id, motivo, detalle, created_at)"
+    )
     .order("created_at", { ascending: false });
 
   if (error) {

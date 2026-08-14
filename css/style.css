@@ -586,6 +586,43 @@ button, .btn {
 
 .btn-whatsapp:hover { background: #1ebe57; }
 
+.reportar-wrap { margin-top: 1rem; }
+
+.link-reportar {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--texto-gris);
+  font-size: 0.78rem;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.reportar-form {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 340px;
+}
+
+.reportar-form select,
+.reportar-form textarea {
+  font-size: 0.85rem;
+  padding: 0.5rem;
+}
+
+.reportar-form textarea { min-height: 60px; resize: vertical; }
+
+.btn-enviar-reporte {
+  background: var(--urgente-tint);
+  color: var(--urgente);
+  font-size: 0.85rem;
+  padding: 0.5rem;
+}
+
+.btn-enviar-reporte:hover { background: #fbd9d6; }
+
 .vacio {
   text-align: center;
   padding: 2.5rem 1.5rem;
@@ -1038,6 +1075,56 @@ textarea { resize: vertical; min-height: 80px; }
 .btn-enviar:hover { background: var(--teal-dark); }
 .btn-enviar:disabled { background: #A6AEBB; cursor: not-allowed; }
 
+.exito-registro {
+  background: var(--card);
+  border: 1px solid var(--borde);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  max-width: 520px;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+.exito-registro h3 { margin: 0 0 0.4rem; }
+.exito-registro p { color: var(--texto-gris); font-size: 0.9rem; margin: 0 0 1.1rem; }
+
+.exito-check {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--teal-tint);
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.9rem;
+}
+
+.exito-check svg { width: 26px; height: 26px; }
+
+.link-editar-box {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.link-editar-box input {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.8rem;
+  color: var(--texto-gris);
+  background: var(--bg);
+}
+
+.btn-copiar-link {
+  background: var(--teal);
+  color: #fff;
+  flex-shrink: 0;
+  padding: 0.6rem 1rem;
+}
+
+.btn-copiar-link:hover { background: var(--teal-dark); }
+
 .mensaje {
   padding: 0.75rem;
   border-radius: var(--radius-md);
@@ -1093,6 +1180,15 @@ textarea { resize: vertical; min-height: 80px; }
   padding: 0.15rem 0.4rem;
   border-radius: 20px;
   align-self: flex-start;
+}
+
+.admin-reportes-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--urgente);
+  background: var(--urgente-tint);
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
 }
 
 .fila-caso .info { flex: 1; min-width: 200px; }

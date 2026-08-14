@@ -8,6 +8,16 @@ const btnAgregarItem = document.getElementById("btn-agregar-item");
 const fotoInput = document.getElementById("foto-input");
 const btnAgregarFoto = document.getElementById("btn-agregar-foto");
 const fotosPreview = document.getElementById("fotos-preview");
+const exitoRegistro = document.getElementById("exito-registro");
+const linkEditarInput = document.getElementById("link-editar");
+const btnCopiarLink = document.getElementById("btn-copiar-link");
+const linkEditarWhatsapp = document.getElementById("link-editar-whatsapp");
+
+btnCopiarLink.addEventListener("click", async () => {
+  await navigator.clipboard.writeText(linkEditarInput.value);
+  btnCopiarLink.textContent = "¡Copiado!";
+  setTimeout(() => { btnCopiarLink.textContent = "Copiar"; }, 2000);
+});
 
 const MAX_FOTOS = 5;
 let fotosSeleccionadas = [];
@@ -128,7 +138,12 @@ form.addEventListener("submit", async (e) => {
       if (errorFotos) throw errorFotos;
     }
 
-    mostrarMensaje("¡Caso registrado! Será revisado antes de publicarse.", "ok");
+    const linkEditar = `${window.location.origin}${window.location.pathname.replace("registro.html", "")}editar.html?id=${casoCreado.id}&token=${casoCreado.edit_token}`;
+    linkEditarInput.value = linkEditar;
+    linkEditarWhatsapp.href = `https://wa.me/?text=${encodeURIComponent(`Este es el link para editar mi caso en Somos Vecinos: ${linkEditar}`)}`;
+    exitoRegistro.classList.remove("hidden");
+    exitoRegistro.scrollIntoView({ behavior: "smooth" });
+
     form.reset();
     contadorDesc.textContent = "0";
     itemsLista.innerHTML = "";

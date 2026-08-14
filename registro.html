@@ -93,10 +93,23 @@
 
     <button type="submit" class="btn-enviar" id="btn-enviar">Enviar caso</button>
   </form>
+
+  <div id="exito-registro" class="exito-registro hidden">
+    <div class="exito-check">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12.5 9.5 18 20 6"/></svg>
+    </div>
+    <h3>¡Caso registrado!</h3>
+    <p>Será revisado antes de publicarse. Guardá este link — es la única forma de editar tu caso después, no hace falta contraseña.</p>
+    <div class="link-editar-box">
+      <input type="text" id="link-editar" readonly>
+      <button type="button" class="btn-copiar-link" id="btn-copiar-link">Copiar</button>
+    </div>
+    <a href="#" id="link-editar-whatsapp" class="btn btn-whatsapp" target="_blank" rel="noopener">Enviarme el link por WhatsApp</a>
+  </div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabaseClient.js"></script>
-<script src="js/registro.js"></script>
+<script src="js/supabaseClient.js?v=1"></script>
+<script src="js/registro.js?v=1"></script>
 </body>
 </html>
