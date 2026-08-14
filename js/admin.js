@@ -17,6 +17,13 @@ const ETIQUETAS = {
   otro: "Otro",
 };
 
+function linkWhatsapp(contacto, texto) {
+  const soloNumeros = contacto.replace(/[^0-9]/g, "");
+  const esTelefono = soloNumeros.length >= 7 && soloNumeros.length === contacto.replace(/[\s()-]/g, "").length;
+  const base = esTelefono ? `https://wa.me/${soloNumeros}` : "https://wa.me/";
+  return `${base}?text=${encodeURIComponent(texto)}`;
+}
+
 function entrar() {
   if (codigoInput.value === CODIGO_ADMIN) {
     sessionStorage.setItem("sv_admin", "1");
@@ -74,7 +81,8 @@ function filaCaso(caso) {
   const acciones = caso.estado === "pendiente"
     ? `<button class="btn-verificar" data-id="${caso.id}" data-estado="verificado">Verificar</button>
        <button class="btn-rechazar" data-id="${caso.id}" data-estado="rechazado">Rechazar</button>`
-    : `<span class="estado-badge estado-${caso.estado}">${caso.estado}</span>`;
+    : `<span class="estado-badge estado-${caso.estado}">${caso.estado}</span>
+       ${caso.estado === "verificado" ? `<button class="btn-enviar-link" data-id="${caso.id}">Enviar link de edición</button>` : ""}`;
 
   div.innerHTML = `
     ${foto}
@@ -90,9 +98,19 @@ function filaCaso(caso) {
   `;
 
   div.querySelectorAll("button[data-id]").forEach((btn) => {
-    if (btn.classList.contains("btn-actualizar-item")) return;
+    if (btn.classList.contains("btn-actualizar-item") || btn.classList.contains("btn-enviar-link")) return;
     btn.addEventListener("click", () => cambiarEstado(caso.id, btn.dataset.estado));
   });
+
+  const btnEnviarLink = div.querySelector(".btn-enviar-link");
+  if (btnEnviarLink) {
+    btnEnviarLink.addEventListener("click", () => {
+      const dir = window.location.pathname.replace(/admin\/(index\.html)?$/, "");
+      const link = `${window.location.origin}${dir}editar.html?id=${caso.id}&token=${caso.edit_token}`;
+      const texto = `Hola ${caso.nombre}, tu caso en Somos Vecinos ya fue verificado. Este es tu link privado para editarlo si necesitás actualizar algo: ${link}\n\nNo lo compartas, solo es para vos.`;
+      window.open(linkWhatsapp(caso.contacto, texto), "_blank", "noopener");
+    });
+  }
 
   const contenedorItems = div.querySelector(".admin-items");
   (caso.caso_items || []).forEach((item) => contenedorItems.appendChild(filaItem(item)));
@@ -122,7 +140,7 @@ async function cargarCasos() {
   const { data, error } = await supabaseClient
     .from("casos")
     .select(
-      "id, nombre, ciudad, tipo_necesidad, urgencia, descripcion, foto_url, contacto, estado, created_at, caso_items(*), caso_fotos(*), reportes(id, motivo, detalle, created_at)"
+      "id, nombre, ciudad, tipo_necesidad, urgencia, descripcion, foto_url, contacto, estado, created_at, edit_token, caso_items(*), caso_fotos(*), reportes(id, motivo, detalle, created_at)"
     )
     .order("created_at", { ascending: false });
 

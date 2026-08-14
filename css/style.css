@@ -1263,6 +1263,15 @@ textarea { resize: vertical; min-height: 80px; }
 .estado-verificado { background: var(--teal); }
 .estado-rechazado { background: var(--urgente); }
 
+.btn-enviar-link {
+  background: #25d366;
+  color: #fff;
+  font-size: 0.78rem;
+  padding: 0.4rem 0.65rem;
+}
+
+.btn-enviar-link:hover { background: #1ebe57; }
+
 /* prensa */
 .prensa-stats {
   display: grid;
