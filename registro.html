@@ -79,10 +79,12 @@
       </select>
     </label>
 
-    <label>
-      Foto (opcional)
-      <input type="file" id="foto" name="foto" accept="image/*">
-    </label>
+    <div class="fotos-form">
+      <span class="campo-label-solo">Fotos (opcional, hasta 5)</span>
+      <div id="fotos-preview" class="fotos-preview"></div>
+      <input type="file" id="foto-input" accept="image/*" multiple class="hidden">
+      <button type="button" class="btn-agregar-item" id="btn-agregar-foto">+ Agregar fotos</button>
+    </div>
 
     <label>
       Contacto (teléfono o email)

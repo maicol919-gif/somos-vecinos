@@ -58,9 +58,13 @@ function filaCaso(caso) {
   const div = document.createElement("div");
   div.className = "fila-caso";
 
-  const foto = caso.foto_url
-    ? `<img src="${caso.foto_url}" alt="Foto de ${caso.nombre}">`
-    : "";
+  const fotos = caso.caso_fotos && caso.caso_fotos.length
+    ? caso.caso_fotos.map((f) => f.url)
+    : caso.foto_url
+    ? [caso.foto_url]
+    : [];
+  const foto = fotos.length ? `<img src="${fotos[0]}" alt="Foto de ${caso.nombre}">` : "";
+  const masFotos = fotos.length > 1 ? `<span class="admin-mas-fotos">+${fotos.length - 1} foto${fotos.length - 1 === 1 ? "" : "s"}</span>` : "";
 
   const acciones = caso.estado === "pendiente"
     ? `<button class="btn-verificar" data-id="${caso.id}" data-estado="verificado">Verificar</button>
@@ -69,6 +73,7 @@ function filaCaso(caso) {
 
   div.innerHTML = `
     ${foto}
+    ${masFotos}
     <div class="info">
       <h4>${caso.nombre} — ${caso.ciudad}</h4>
       <p>${ETIQUETAS[caso.tipo_necesidad] || caso.tipo_necesidad} · Urgencia: ${caso.urgencia}</p>
@@ -111,7 +116,7 @@ async function actualizarItem(id, cantidad_recibida) {
 async function cargarCasos() {
   const { data, error } = await supabaseClient
     .from("casos")
-    .select("*, caso_items(*)")
+    .select("*, caso_items(*), caso_fotos(*)")
     .order("created_at", { ascending: false });
 
   if (error) {

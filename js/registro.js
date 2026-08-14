@@ -5,6 +5,38 @@ const mensaje = document.getElementById("mensaje");
 const btnEnviar = document.getElementById("btn-enviar");
 const itemsLista = document.getElementById("items-lista");
 const btnAgregarItem = document.getElementById("btn-agregar-item");
+const fotoInput = document.getElementById("foto-input");
+const btnAgregarFoto = document.getElementById("btn-agregar-foto");
+const fotosPreview = document.getElementById("fotos-preview");
+
+const MAX_FOTOS = 5;
+let fotosSeleccionadas = [];
+
+function actualizarFotosPreview() {
+  fotosPreview.innerHTML = "";
+  fotosSeleccionadas.forEach((archivo, i) => {
+    const item = document.createElement("div");
+    item.className = "foto-preview-item";
+    item.innerHTML = `<img src="${URL.createObjectURL(archivo)}" alt="Foto ${i + 1}"><button type="button" class="foto-preview-quitar" aria-label="Quitar foto">&times;</button>`;
+    item.querySelector(".foto-preview-quitar").addEventListener("click", () => {
+      fotosSeleccionadas.splice(i, 1);
+      actualizarFotosPreview();
+    });
+    fotosPreview.appendChild(item);
+  });
+  btnAgregarFoto.disabled = fotosSeleccionadas.length >= MAX_FOTOS;
+  btnAgregarFoto.textContent = fotosSeleccionadas.length >= MAX_FOTOS ? "Máximo 5 fotos" : "+ Agregar fotos";
+}
+
+btnAgregarFoto.addEventListener("click", () => fotoInput.click());
+
+fotoInput.addEventListener("change", () => {
+  const disponibles = MAX_FOTOS - fotosSeleccionadas.length;
+  const nuevas = [...fotoInput.files].slice(0, disponibles);
+  fotosSeleccionadas.push(...nuevas);
+  fotoInput.value = "";
+  actualizarFotosPreview();
+});
 
 descripcion.addEventListener("input", () => {
   contadorDesc.textContent = descripcion.value.length;
@@ -64,13 +96,6 @@ form.addEventListener("submit", async (e) => {
   mensaje.className = "mensaje hidden";
 
   try {
-    const archivo = document.getElementById("foto").files[0];
-    let foto_url = null;
-
-    if (archivo) {
-      foto_url = await subirFoto(archivo);
-    }
-
     const { data: casoCreado, error } = await supabaseClient
       .from("casos")
       .insert({
@@ -79,7 +104,6 @@ form.addEventListener("submit", async (e) => {
         tipo_necesidad: document.getElementById("tipo_necesidad").value,
         urgencia: document.getElementById("urgencia").value,
         descripcion: descripcion.value.trim(),
-        foto_url,
         contacto: document.getElementById("contacto").value.trim(),
         estado: "pendiente",
       })
@@ -96,11 +120,21 @@ form.addEventListener("submit", async (e) => {
       if (errorItems) throw errorItems;
     }
 
+    if (fotosSeleccionadas.length > 0) {
+      const urls = await Promise.all(fotosSeleccionadas.map((archivo) => subirFoto(archivo)));
+      const { error: errorFotos } = await supabaseClient.from("caso_fotos").insert(
+        urls.map((url) => ({ url, caso_id: casoCreado.id }))
+      );
+      if (errorFotos) throw errorFotos;
+    }
+
     mostrarMensaje("¡Caso registrado! Será revisado antes de publicarse.", "ok");
     form.reset();
     contadorDesc.textContent = "0";
     itemsLista.innerHTML = "";
     agregarFilaItem();
+    fotosSeleccionadas = [];
+    actualizarFotosPreview();
   } catch (err) {
     mostrarMensaje(`Error al registrar: ${err.message}`, "error");
   } finally {

@@ -39,6 +39,42 @@ const SHARE_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 
 const CHECK_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="4 12.5 9.5 18 20 6"/></svg>`;
 
+function fotoPrincipal(caso) {
+  return (caso.caso_fotos && caso.caso_fotos[0] && caso.caso_fotos[0].url) || caso.foto_url || null;
+}
+
+function crearGaleriaHTML(caso) {
+  const fotos = caso.caso_fotos && caso.caso_fotos.length
+    ? caso.caso_fotos.map((f) => f.url)
+    : caso.foto_url
+    ? [caso.foto_url]
+    : [];
+
+  if (fotos.length === 0) {
+    return `<div class="det-foto">${SILUETA_SVG}</div>`;
+  }
+
+  const miniaturas = fotos.length > 1
+    ? `<div class="galeria-miniaturas">${fotos
+        .map((url, i) => `<img src="${url}" class="galeria-mini${i === 0 ? " activa" : ""}" data-url="${url}" alt="Foto ${i + 1} de ${caso.nombre}">`)
+        .join("")}</div>`
+    : "";
+
+  return `<div class="det-foto"><img class="galeria-principal" src="${fotos[0]}" alt="Foto de ${caso.nombre}"></div>${miniaturas}`;
+}
+
+function activarGaleria(contenedor) {
+  const principal = contenedor.querySelector(".galeria-principal");
+  if (!principal) return;
+  contenedor.querySelectorAll(".galeria-mini").forEach((mini) => {
+    mini.addEventListener("click", () => {
+      principal.src = mini.dataset.url;
+      contenedor.querySelectorAll(".galeria-mini").forEach((m) => m.classList.remove("activa"));
+      mini.classList.add("activa");
+    });
+  });
+}
+
 function pct(item) {
   return Math.max(0, Math.min(100, Math.round((item.cantidad_recibida / item.cantidad_requerida) * 100)));
 }
@@ -88,8 +124,9 @@ function linkWhatsapp(contacto, texto) {
 }
 
 function crearCardHTML(caso) {
-  const foto = caso.foto_url
-    ? `<img src="${caso.foto_url}" alt="Foto de ${caso.nombre}">`
+  const url = fotoPrincipal(caso);
+  const foto = url
+    ? `<img src="${url}" alt="Foto de ${caso.nombre}">`
     : `<div class="foto-placeholder">${SILUETA_SVG}</div>`;
 
   return `
@@ -112,9 +149,8 @@ function crearCardHTML(caso) {
 }
 
 function crearMiniListItemHTML(caso, activo) {
-  const foto = caso.foto_url
-    ? `<img src="${caso.foto_url}" alt="Foto de ${caso.nombre}">`
-    : SILUETA_SVG;
+  const url = fotoPrincipal(caso);
+  const foto = url ? `<img src="${url}" alt="Foto de ${caso.nombre}">` : SILUETA_SVG;
   const resumenItems = caso.caso_items && caso.caso_items.length
     ? caso.caso_items.slice(0, 2).map((item) => `${item.nombre} ${pct(item)}%`).join(" · ")
     : ETIQUETAS[caso.tipo_necesidad] || caso.tipo_necesidad;
@@ -132,12 +168,8 @@ function crearMiniListItemHTML(caso, activo) {
 }
 
 function crearDetallePanelHTML(caso) {
-  const foto = caso.foto_url
-    ? `<img src="${caso.foto_url}" alt="Foto de ${caso.nombre}">`
-    : SILUETA_SVG;
-
   return `
-    <div class="det-foto">${foto}</div>
+    ${crearGaleriaHTML(caso)}
     <h3 class="det-nombre">${caso.nombre}</h3>
     <div class="det-verif">${CHECK_SVG.replace('stroke="#fff"', 'stroke="currentColor"')}Necesidad verificada · ${caso.ciudad}</div>
     <p class="det-desc">${caso.descripcion}</p>
@@ -154,6 +186,7 @@ function renderDashDetail(caso) {
   dashDetail.innerHTML = crearDetallePanelHTML(caso);
   dashDetail.querySelector("#dash-btn-ayudar").addEventListener("click", () => abrirModal(caso));
   dashDetail.querySelector("#dash-btn-compartir").addEventListener("click", () => compartirCaso(caso));
+  activarGaleria(dashDetail);
 }
 
 function renderDashList(filtrados) {
@@ -181,12 +214,14 @@ function renderDashList(filtrados) {
 function abrirModal(caso) {
   modalNombre.textContent = caso.nombre;
   modalDetalle.innerHTML = `
+    ${crearGaleriaHTML(caso)}
     <p class="descripcion">${caso.descripcion}</p>
     ${caso.caso_items && caso.caso_items.length ? crearItemsFullHTML(caso.caso_items) : ""}
   `;
   modalContacto.textContent = caso.contacto;
   modalWhatsapp.href = linkWhatsapp(caso.contacto, `Hola, vi tu caso en Somos Vecinos y quiero ayudar`);
   overlay.classList.remove("hidden");
+  activarGaleria(modalDetalle);
 }
 
 function compartirCaso(caso) {
@@ -258,7 +293,7 @@ function poblarFiltroCiudades() {
 async function cargarCasos() {
   const { data, error } = await supabaseClient
     .from("casos")
-    .select("*, caso_items(*)")
+    .select("*, caso_items(*), caso_fotos(*)")
     .eq("estado", "verificado")
     .order("created_at", { ascending: false });
 
