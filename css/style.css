@@ -105,6 +105,11 @@ header.top nav a {
 
 header.top nav a:hover { text-decoration: underline; }
 
+/* apariencia de app en mobile: sin nav de texto, solo el logo (ya lleva a inicio) */
+@media (max-width: 767px) {
+  header.top nav { display: none; }
+}
+
 main {
   max-width: 1100px;
   margin: 0 auto;
