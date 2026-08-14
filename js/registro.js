@@ -11,7 +11,6 @@ const fotosPreview = document.getElementById("fotos-preview");
 const exitoRegistro = document.getElementById("exito-registro");
 const linkEditarInput = document.getElementById("link-editar");
 const btnCopiarLink = document.getElementById("btn-copiar-link");
-const linkEditarWhatsapp = document.getElementById("link-editar-whatsapp");
 
 btnCopiarLink.addEventListener("click", async () => {
   await navigator.clipboard.writeText(linkEditarInput.value);
@@ -140,7 +139,6 @@ form.addEventListener("submit", async (e) => {
 
     const linkEditar = `${window.location.origin}${window.location.pathname.replace("registro.html", "")}editar.html?id=${casoCreado.id}&token=${casoCreado.edit_token}`;
     linkEditarInput.value = linkEditar;
-    linkEditarWhatsapp.href = `https://wa.me/?text=${encodeURIComponent(`Este es el link para editar mi caso en Somos Vecinos: ${linkEditar}`)}`;
     exitoRegistro.classList.remove("hidden");
     exitoRegistro.scrollIntoView({ behavior: "smooth" });
 

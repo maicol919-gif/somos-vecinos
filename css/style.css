@@ -1125,6 +1125,16 @@ textarea { resize: vertical; min-height: 80px; }
 
 .btn-copiar-link:hover { background: var(--teal-dark); }
 
+.link-editar-aviso {
+  background: var(--urgente-tint);
+  color: var(--urgente);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius-md);
+  margin: 0;
+}
+
 .mensaje {
   padding: 0.75rem;
   border-radius: var(--radius-md);
